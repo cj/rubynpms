@@ -1,0 +1,9 @@
+.bundle
+.connect
+.git
+node_modules
+npm-debug.log
+*.env*
+
+# do not ignore
+!.bundle/config
