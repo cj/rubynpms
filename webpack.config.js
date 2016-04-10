@@ -16,6 +16,9 @@ var config             = {
     root: [__dirname],
     extensions: ['', '.js', '.css', '.rb']
   },
+  opal: {
+    cacheDirectory: './.connect/cache'
+  },
   module: {
     loaders: [
       { 
@@ -34,8 +37,19 @@ var config             = {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loader: 'url?limit=10000!img?progressive=true'
       },
-      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
-      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
+      // {
+      //   test: /\.svg$/,
+      //   loader: 'svg-inline'
+      // },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "url-loader?limit=10000&mimetype=application/font-woff"
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "file-loader",
+        exclude: /img/
+      }
     ]
   },
   // packageAlias: false,
@@ -45,7 +59,10 @@ var config             = {
   postcss: function (webpack) {
     return [
       require("postcss-url")(),
+      require('postcss-normalize')(),
+      require("postcss-apply")(),
       require("postcss-cssnext")(),
+      require("lost")(),
       // add your "plugins" here
       // ...
       // and if you want to compress,
@@ -117,8 +134,8 @@ if (production) {
     path: path.join(__dirname),
   }
   // config.devtool = 'source-map'
-  config.devtool = '#inline-source-map'
-  // config.devtool = 'sourcemap'
+  // config.devtool = '#inline-source-map'
+  config.devtool = 'source-map'
 }
 
 // http://moduscreate.com/optimizing-react-es6-webpack-production-build/

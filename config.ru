@@ -1,7 +1,3 @@
 require './app/config/boot'
 
-if RACK_ENV != 'development'
-  run RubyNpm::Server
-else
-  Opal::Connect.run self, Unreloader
-end
+RACK_ENV != 'development' ? run(RubyNpms::Server) : Opal::Connect.run(self, Unreloader)

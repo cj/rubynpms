@@ -1,6 +1,25 @@
-module RubyNpm
+module RubyNpms
   class Server < Roda
-    use Rack::Session::Cookie, :secret => '123456'
+    use Rack::Session::Redis, redis_server: {
+      server: REDIS_URL
+    }, expire_after: 864_00 # expires in 1 day
+
+    use Rack::Cors do
+      allow do
+        origins '127.0.0.1', 'localhost', '0.0.0.0', URI.parse(SITE_URL).host
+        resource '*', headers: :any, methods: [:get, :options]
+      end
+    end
+
+    if %w(production staging).include? RACK_ENV
+      use Rack::Timeout
+
+      Rack::Timeout.timeout      = 15
+      Rack::Timeout.wait_timeout = 15
+    end
+
+    use Rack::SslEnforcer if %w(production staging).include? RACK_ENV
+    use Rack::Protection
 
     plugin :environments
 
@@ -51,6 +70,8 @@ module RubyNpm
       request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
     end
 
+    Geminabox.data = "#{Dir.pwd}/app/data"
+
     route do |r|
       r.assets if RACK_ENV != 'development'
 
@@ -72,8 +93,11 @@ module RubyNpm
       end
 
       r.root do
-        'Hello, World!'
+        layout = Components::Layout.scope(self)
+        pjax_request ? layout.render_pjax(:display) : layout.render(:display)
       end
+
+      r.run Geminabox::Server
     end
   end
 end
