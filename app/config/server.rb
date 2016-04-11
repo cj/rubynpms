@@ -1,8 +1,6 @@
 module RubyNpms
   class Server < Roda
-    use Rack::Session::Redis, redis_server: {
-      server: REDIS_URL
-    }, expire_after: 864_00 # expires in 1 day
+    use Rack::Session::Sequel, db: DB, expire_after: 864_00 # expires in 1 day
 
     use Rack::Cors do
       allow do

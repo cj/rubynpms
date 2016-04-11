@@ -8,7 +8,7 @@ install:
 	touch .env.production
 
 run:
-	RACK_ENV=development bundle exec puma -C app/config/puma.rb
+	docker-compose up& RACK_ENV=development bundle exec puma -C app/config/puma.rb
 
 build:
 	RACK_ENV=production bundle exec rake webpack:build

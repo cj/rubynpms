@@ -1,3 +1,5 @@
+require_relative 'layout/test'
+
 module RubyNpms
   module Components
     class Layout

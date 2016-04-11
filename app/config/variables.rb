@@ -10,4 +10,4 @@ AWS_ACCESS_KEY_ID     = ENV.fetch('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = ENV.fetch('AWS_SECRET_ACCESS_KEY')
 AWS_S3_BUCKET         = ENV.fetch('AWS_S3_BUCKET') { "ruby-npm-#{RACK_ENV}" }
 SITE_URL              = ENV.fetch('SITE_URL')
-REDIS_URL             = ENV.fetch('REDIS_URL') { 'redis://127.0.0.1:6379' }
+DATABASE_URL          = ENV.fetch('DATABASE_URL')

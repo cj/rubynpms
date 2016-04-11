@@ -8,12 +8,12 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var CompressionPlugin  = require("compression-webpack-plugin");
 var production         = process.env.RACK_ENV == 'production';
 var config             = {
-  context: __dirname,
+  // context: __dirname,
   resolve: {
     alias: {
       app: path.resolve( __dirname, 'app' )
     },
-    root: [__dirname],
+    // root: [__dirname],
     extensions: ['', '.js', '.css', '.rb']
   },
   opal: {
@@ -25,7 +25,6 @@ var config             = {
         test: /\.rb$/, 
         exclude: /node_modules|\.bundle/,
         loader: "opal-webpack",
-        root: path.resolve('./'),
         query: { "dynamic_require_severity": "ignore" }
       },
       {

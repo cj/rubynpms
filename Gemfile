@@ -9,7 +9,6 @@ gem 'rack-cors', '0.4.0'
 gem 'rack-timeout', '0.3.2'
 gem 'rack-ssl-enforcer', '0.2.9'
 gem 'rack-unreloader', '1.5.0'
-gem 'redis-rack', github: 'redis-store/redis-rack'
 gem 'puma', '3.2.0'
 gem 'roda', '2.11.0'
 gem 'opal', '0.10.0.beta2'
@@ -22,8 +21,13 @@ group :development, :test do
   gem 'awesome_print'
   gem 'better_errors'
   gem "binding_of_caller"
+  gem 'rspec', '3.4.0'
 end
 
 # app specific gems
 gem 'aws-sdk', '~> 2'
 gem 'geminabox', '0.13.0'
+gem 'pg', '~> 0.18.4'
+gem 'sequel', '4.33.0'
+gem 'sequel_pg', '1.6.14', require: 'sequel'
+gem 'rack-session-sequel'

@@ -18,12 +18,18 @@ Unreloader = Rack::Unreloader.new(
 # standard gems
 require 'rack/cors'
 require 'rack/protection'
-require 'redis-rack'
+require 'rack/protection'
+require 'rack/session/sequel'
+require 'rack-timeout'
+require 'rack-ssl-enforcer'
 require 'roda'
 require 'opal'
 require 'opal-jquery'
 require 'opal-connect'
+
 # app specific gems
+require "pg"
+require 'sequel'
 require 'aws-sdk'
 require 'geminabox'
 
@@ -34,7 +40,7 @@ if %w'development test'.include? RACK_ENV
 end
 
 # require configs
-%w'aws connect roda_assets'.each { |config| require_relative config }
+%w'database aws connect roda_assets'.each { |config| require_relative config }
 
 # require all app files
 glob = './app/{components,plugins,models}/**/*.rb'
